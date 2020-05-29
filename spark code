@@ -1,0 +1,26 @@
+val ckfile =sc.textFile("/home/harsh/Desktop/ipl match analyse/matches.csv")
+ckfile.collect.foreach(println)
+ckfile.first()
+val states = ckfile.map(_.split(",")(2))
+states.collect.foreach(println)
+
+val scount = states.map(scount => (scount,1))
+val statecount = scount.reduceByKey(_+_).map(tup => (tup._2, tup._1)).sortByKey(false)
+
+statecount.take(10).foreach(println)
+
+val fileRDD = ckfile.flatMap(line => line.split("Hyderabad")) 
+fileRDD.collect.foreach(println)
+
+ val fil = ckfile.filter(line => line.contains("2017"))
+fil.collect.foreach(println)
+
+ val fil2 = ckfile.filter(line => line.contains("2016"))
+fil2.collect.foreach(println)
+
+val ManofTheMatch = ckfile.map(_.split(",")(13))
+ ManofTheMatch.collect.foreach(println)
+
+val MOTMcount = ManofTheMatch.map(wincount => (wincount,1))
+
+val ManOTM = MOTMcount.reduceByKey(_+_).map(tup=>(tup._2, tup._1))
